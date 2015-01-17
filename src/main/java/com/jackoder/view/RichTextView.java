@@ -92,19 +92,21 @@ public class RichTextView extends TextView{
 
             @Override
             protected void onPostExecute(Drawable result) {
-                //the image's size may larger than the container, set the max width equal to the parent's width
-                float multiplier = 1;
-                if (getMeasuredWidth() < result.getIntrinsicWidth()) {
-                    multiplier = (float)getMeasuredWidth() / (float)result.getIntrinsicWidth();
+                if (null != result) {
+                    //the image's size may larger than the container, set the max width equal to the parent's width
+                    float multiplier = 1;
+                    if (getMeasuredWidth() < result.getIntrinsicWidth()) {
+                        multiplier = (float) getMeasuredWidth() / (float) result.getIntrinsicWidth();
+                    }
+                    int width = (int) (result.getIntrinsicWidth() * multiplier);
+                    int height = (int) (result.getIntrinsicHeight() * multiplier);
+                    result.setBounds(0, 0, width, height);
+                    urlDrawable.setBounds(0, 0, width, height);
+                    urlDrawable.drawable = result;
+                    RichTextView.this.invalidate();
+                    RichTextView.this.setHeight(RichTextView.this.getHeight() + result.getIntrinsicHeight());
+                    RichTextView.this.setEllipsize(null);
                 }
-                int width = (int)(result.getIntrinsicWidth() * multiplier);
-                int height = (int)(result.getIntrinsicHeight() * multiplier);
-                result.setBounds(0, 0, width, height);
-                urlDrawable.setBounds(0, 0, width, height);
-                urlDrawable.drawable = result;
-                RichTextView.this.invalidate();
-                RichTextView.this.setHeight(RichTextView.this.getHeight() + result.getIntrinsicHeight());
-                RichTextView.this.setEllipsize(null);
             }
 
             public Drawable fetchDrawable(String urlString) {
