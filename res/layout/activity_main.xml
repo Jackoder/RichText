@@ -1,7 +1,6 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
         android:background="#fff">
 
     <com.jackoder.view.RichTextView
@@ -10,9 +9,12 @@
             android:layout_height="wrap_content"
             android:textColor="#000"/>
 
-    <EditText
-            android:id="@+id/et_content"
+    <com.jackoder.view.RichEditText
+            android:id="@+id/ret_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            android:layout_below="@id/rtv_content"
+            android:gravity="left|top"
+            android:textColor="#000"/>
 
-</LinearLayout>
+</RelativeLayout>

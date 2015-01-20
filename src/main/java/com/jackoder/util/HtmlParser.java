@@ -1,5 +1,7 @@
 package com.jackoder.util;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -12,9 +14,9 @@ import java.util.regex.Pattern;
  */
 public class HtmlParser {
 
-    private final static String PATTERN_IMG_TAG = "<img(\\s+[\\w]+=\"[^\"']*\")*>";
-    private final static String PATTERN_IMG_TAG_FORMULA = "<img(\\s+[\\w]+=\"(?!(pic))[^\"']*\")*>";
-    private final static String PATTERN_IMG_TAG_PIC = "<img(\\s+[\\w]+=\"(?!(formula))[^\"']*\")*>";
+    private final static String PATTERN_IMG_TAG = "<img(\\s+[\\w]+=\"[^\"']*\")*\\s*>";
+    private final static String PATTERN_IMG_TAG_FORMULA = "<img(\\s+[\\w]+=\"(?!(\\u56fe\\u7247))[^\"']*\")*\\s*>";
+    private final static String PATTERN_IMG_TAG_PIC = "<img(\\s+[\\w]+=\"(?!(\\u516c\\u5f0f))[^\"']*\")*\\s*>";
 
     final static Pattern patternImgTag = Pattern.compile(PATTERN_IMG_TAG);
     final static Pattern patternImgTagFormula = Pattern.compile(PATTERN_IMG_TAG_FORMULA);
@@ -24,21 +26,24 @@ public class HtmlParser {
     final static String  FORMULA_TAG_TEXT = "[公式]";
 
     public static void main(String args[]) {
-        String testStr = "haha<img title=\"\" src=\"www.baidu.com\" tag=\"公式\">so good<img src=\"www.google.com\">\n<img>";
-        System.out.println(testStr);
-
-        System.out.println("是否包含img标签=" + containsImgTag(testStr));
+        String testStr = "haha<img title=\"\" src=\"www.baidu.com\" tag=\"公式\">so good<img src=\"www.google.com\"><img>";
+//        System.out.println(testStr);
+//
+//        System.out.println("是否包含img标签=" + containsImgTag(testStr));
+//
+//        testGroup(testStr);
+        System.out.println(getSrcFromImgTag("<img src=\"http://jmzsoftware.com/wp-content/uploads/2014/05/jmzsoftware1-e1400169340524.png\" >"));
 
         //切割字符串
-        System.out.println("the string is split to these string");
-        for(String temp : cutStringByImgTag(testStr)) {
-            System.out.println(temp);
-        }
-
-        //不显示图片或公式，以字符串代替的方案
-        String testStr2 = "haha<img title=\"\" src=\"www.baidu.com\" tag=\"formula\">so good<img src=\"www.google.com\" tag=\"pic\">\n<img>";
-        System.out.println("转换为简单文本：" + convertToString(testStr2));
-        System.out.println("转换为特定文本：" + convertToCustomString(testStr2));
+//        System.out.println("the string is split to these string");
+//        for(String temp : cutStringByImgTag(testStr)) {
+//            System.out.println(temp);
+//        }
+//
+//        //不显示图片或公式，以字符串代替的方案
+//        String testStr2 = "haha<img title=\"\" src=\"www.baidu.com\" tag=\"公式\">so good<img src=\"www.google.com\" tag=\"图片\"><img>";
+//        System.out.println("转换为简单文本：" + convertToString(testStr2));
+//        System.out.println("转换为特定文本：" + convertToCustomString(testStr2));
     }
 
     //测试group方法
@@ -67,6 +72,16 @@ public class HtmlParser {
     public static boolean containsImgTag(String targetStr) {
         Matcher matcher = patternImgTag.matcher(targetStr);
         return matcher.find();
+    }
+
+    public static String getSrcFromImgTag(String imageTag) {
+        Pattern patternImgTag = Pattern.compile("src=\"(([^\"']*))\"");
+        Matcher matcher = patternImgTag.matcher(imageTag);
+        if (matcher.find() && matcher.groupCount() >= 2) {
+            Log.d("HtmlParser", String.format("[%s] getSrcFromImageTag [%s]", imageTag, matcher.group(1)));
+            return matcher.group(1);
+        }
+        return null;
     }
 
     /**

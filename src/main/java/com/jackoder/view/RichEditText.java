@@ -5,12 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.Spannable;
-import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.EditText;
 import com.jackoder.util.HtmlParser;
 import com.jackoder.view.base.ImageNonViewAware;
 import com.jackoder.view.base.URLDrawable;
@@ -23,19 +23,19 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import java.util.List;
 
 /**
- * Created by Jackoder on 2015/1/15.
+ * Created by Jackoder on 2015/1/20.
  */
-public class RichTextView extends TextView{
+public class RichEditText extends EditText {
 
-    public RichTextView(Context context) {
+    public RichEditText(Context context) {
         super(context);
     }
 
-    public RichTextView(Context context, AttributeSet attrs) {
+    public RichEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public RichTextView(Context context, AttributeSet attrs, int defStyle) {
+    public RichEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
@@ -45,7 +45,7 @@ public class RichTextView extends TextView{
             ImageLoader.getInstance().init(config);
         }
 
-        SpannableString ss = new SpannableString(text);
+        SpannableStringBuilder ss = new SpannableStringBuilder(text);
         if (HtmlParser.containsImgTag(text)) {
             List<String> cutTextList = HtmlParser.cutStringByImgTag(text);
             int index = 0;
@@ -97,5 +97,4 @@ public class RichTextView extends TextView{
             setText(text);
         }
     }
-
 }
