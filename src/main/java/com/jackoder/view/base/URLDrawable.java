@@ -3,6 +3,7 @@ package com.jackoder.view.base;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import com.jackoder.R;
@@ -23,6 +24,8 @@ public class URLDrawable extends BitmapDrawable {
     public void draw(Canvas canvas) {
         if(drawable != null) {
             drawable.draw(canvas);
+            Log.d("test", "view = " + view);
+            Log.d("test", "line count=" + ((TextView)view).getLineCount());
         } else {
             //display the default image
             drawable = view.getResources().getDrawable(R.drawable.unknown_image);
@@ -31,7 +34,6 @@ public class URLDrawable extends BitmapDrawable {
             drawable.setBounds(0, 0, width, height);
             setBounds(0, 0, width, height);
             draw(canvas);
-            view.invalidate();
             ((TextView)view).setHeight(view.getHeight() + drawable.getIntrinsicHeight());
         }
     }

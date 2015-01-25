@@ -55,7 +55,7 @@ public class RichTextView extends TextView{
 
                     String url = HtmlParser.getSrcFromImgTag(temp);
                     if (null != url && url.trim().length() != 0) {
-                        ImageSize imageSize = new ImageSize(200, 200);
+                        ImageSize imageSize = new ImageSize(100, 100);
                         ImageNonViewAware imageAware = new ImageNonViewAware(imageSize, ViewScaleType.CROP);
                         ImageLoader.getInstance().displayImage(url, imageAware, new SimpleImageLoadingListener() {
                             @Override
@@ -72,9 +72,8 @@ public class RichTextView extends TextView{
                                     loadedImageDrawable.setBounds(0, 0, width, height);
                                     drawable.setBounds(0, 0, width, height);
                                     drawable.setDrawable(loadedImageDrawable);
-                                    invalidate();
-                                    setHeight(getHeight() + loadedImageDrawable.getIntrinsicHeight());
                                     setEllipsize(null);
+                                    setHeight(getHeight() + loadedImageDrawable.getIntrinsicHeight());
                                 } else {
                                     Log.d("URLImageParser", "load image error ---- " + imageUri);
                                 }
@@ -88,6 +87,11 @@ public class RichTextView extends TextView{
             }
         }
         setText(ss);
+    }
+
+    private int dip2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
     }
 
     public void setPlainText(String text) {
