@@ -11,9 +11,9 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import com.jackoder.util.HtmlParser;
-import com.jackoder.view.base.ImageNonViewAware;
-import com.jackoder.view.base.URLDrawable;
+import com.nd.hy.android.mooc.view.widget.richtext.base.ImageNonViewAware;
+import com.nd.hy.android.mooc.view.widget.richtext.base.URLDrawable;
+import com.nd.hy.android.mooc.view.widget.richtext.util.HtmlParser;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
@@ -51,11 +51,9 @@ public class RichEditText extends EditText {
             int index = 0;
             for(String temp : cutTextList) {
                 if (HtmlParser.containsImgTag(temp)) {
-                    final URLDrawable drawable = new URLDrawable(this);
-
-                    String url = HtmlParser.getSrcFromImgTag(temp);
+                    final URLDrawable drawable = new URLDrawable(this);String url = HtmlParser.getSrcFromImgTag(temp);
                     if (null != url && url.trim().length() != 0) {
-                        ImageSize imageSize = new ImageSize(200, 200);
+                        ImageSize imageSize = new ImageSize(100, 100);
                         ImageNonViewAware imageAware = new ImageNonViewAware(imageSize, ViewScaleType.CROP);
                         ImageLoader.getInstance().displayImage(url, imageAware, new SimpleImageLoadingListener() {
                             @Override
@@ -64,17 +62,20 @@ public class RichEditText extends EditText {
                                 if (loadedImage != null) {
                                     Drawable loadedImageDrawable = new BitmapDrawable(getResources(), loadedImage);
                                     float multiplier = 1;
-                                    if (getMeasuredWidth() < loadedImageDrawable.getIntrinsicWidth()) {
-                                        multiplier = (float) getMeasuredWidth() / (float) loadedImageDrawable.getIntrinsicWidth();
+                                    float width = 1.5f * loadedImageDrawable.getIntrinsicWidth();
+                                    float height = 1.5f * loadedImageDrawable.getIntrinsicHeight();
+                                    float containerWidth = getMeasuredWidth() - getTotalPaddingLeft() - getTotalPaddingRight();
+                                    if (containerWidth < width) {
+                                        multiplier = containerWidth / width;
                                     }
-                                    int width = (int) (loadedImageDrawable.getIntrinsicWidth() * multiplier) - getTotalPaddingLeft() - getTotalPaddingRight();
-                                    int height = (int) (loadedImageDrawable.getIntrinsicHeight() * multiplier);
-                                    loadedImageDrawable.setBounds(0, 0, width, height);
-                                    drawable.setBounds(0, 0, width, height);
+                                    width = width * multiplier;
+                                    height = height * multiplier;
+                                    loadedImageDrawable.setBounds(0, 0, (int)width, (int)height);
+                                    drawable.setBounds(0, 0, (int) width, (int) height);
                                     drawable.setDrawable(loadedImageDrawable);
-                                    invalidate();
-                                    setHeight(getHeight() + loadedImageDrawable.getIntrinsicHeight());
                                     setEllipsize(null);
+                                    setHeight(getHeight() +(int)height);
+                                    Log.d("RichTextView", "get image " + imageUri);
                                 } else {
                                     Log.d("URLImageParser", "load image error ---- " + imageUri);
                                 }

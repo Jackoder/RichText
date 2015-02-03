@@ -14,9 +14,9 @@ import java.util.regex.Pattern;
  */
 public class HtmlParser {
 
-    private final static String PATTERN_IMG_TAG = "<img(\\s+[\\w]+=\"[^\"']*\")*\\s*>";
-    private final static String PATTERN_IMG_TAG_FORMULA = "<img(\\s+[\\w]+=\"(?!(\\u56fe\\u7247))[^\"']*\")*\\s*>";
-    private final static String PATTERN_IMG_TAG_PIC = "<img(\\s+[\\w]+=\"(?!(\\u516c\\u5f0f))[^\"']*\")*\\s*>";
+    private final static String PATTERN_IMG_TAG = "<img(\\s+[\\w]+=\"[^\"']*\")*\\s*/>";
+    private final static String PATTERN_IMG_TAG_FORMULA = "<img(\\s+[\\w]+=\"(?!(\\u56fe\\u7247))[^\"']*\")*\\s*/>";
+    private final static String PATTERN_IMG_TAG_PIC = "<img(\\s+[\\w]+=\"(?!(\\u516c\\u5f0f))[^\"']*\")*\\s*/>";
 
     final static Pattern patternImgTag = Pattern.compile(PATTERN_IMG_TAG);
     final static Pattern patternImgTagFormula = Pattern.compile(PATTERN_IMG_TAG_FORMULA);

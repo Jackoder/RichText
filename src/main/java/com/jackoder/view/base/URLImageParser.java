@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.text.Html;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -16,10 +15,10 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
  */
 public class URLImageParser implements Html.ImageGetter {
 
-    View        view;
+    TextView        view;
     URLDrawable urlDrawable;
 
-    public URLImageParser(View view) {
+    public URLImageParser(TextView view) {
         this.view = view;
     }
 
@@ -61,8 +60,8 @@ public class URLImageParser implements Html.ImageGetter {
                 urlDrawable.setBounds(0, 0, width, height);
                 urlDrawable.drawable = result;
                 view.invalidate();
-                ((TextView)view).setHeight(view.getHeight() + result.getIntrinsicHeight());
-                ((TextView)view).setEllipsize(null);
+                view.setHeight(view.getHeight() + result.getIntrinsicHeight());
+                view.setEllipsize(null);
             }
         }
 

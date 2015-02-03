@@ -3,7 +3,45 @@
     android:layout_height="match_parent"
         android:background="#fff">
 
+    <RelativeLayout android:id="@+id/rl_discuss_item_user_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="15dp">
+
+        <ImageView
+                android:id="@+id/riv_photo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_launcher"
+                android:scaleType="centerCrop"/>
+
+        <TextView android:id="@+id/tv_user_name"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_centerVertical="true"
+                  android:layout_marginLeft="15dp"
+                  android:layout_toRightOf="@+id/riv_photo"
+                  android:textColor="#000"
+                  android:text="张三"
+                  android:singleLine="true"/>
+
+        <TextView android:id="@+id/tv_date"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="2013-12-01"
+                  android:layout_alignParentRight="true"
+                  android:layout_centerVertical="true"
+                  android:singleLine="true"
+                  android:textSize="11sp"
+                  android:textColor="#000"/>
+    </RelativeLayout>
+
     <com.jackoder.view.RichTextView
+            android:layout_below="@id/rl_discuss_item_user_info"
             android:id="@+id/rtv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

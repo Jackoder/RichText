@@ -64,16 +64,20 @@ public class RichTextView extends TextView{
                                 if (loadedImage != null) {
                                     Drawable loadedImageDrawable = new BitmapDrawable(getResources(), loadedImage);
                                     float multiplier = 1;
-                                    if (getMeasuredWidth() < loadedImageDrawable.getIntrinsicWidth()) {
-                                        multiplier = (float) getMeasuredWidth() / (float) loadedImageDrawable.getIntrinsicWidth();
+                                    float width = 1.5f * loadedImageDrawable.getIntrinsicWidth();
+                                    float height = 1.5f * loadedImageDrawable.getIntrinsicHeight();
+                                    float containerWidth = getMeasuredWidth() - getTotalPaddingLeft() - getTotalPaddingRight();
+                                    if (containerWidth < width) {
+                                        multiplier = containerWidth / width;
                                     }
-                                    int width = (int) (loadedImageDrawable.getIntrinsicWidth() * multiplier) - getTotalPaddingLeft() - getTotalPaddingRight();
-                                    int height = (int) (loadedImageDrawable.getIntrinsicHeight() * multiplier);
-                                    loadedImageDrawable.setBounds(0, 0, width, height);
-                                    drawable.setBounds(0, 0, width, height);
+                                    width = width * multiplier;
+                                    height = height * multiplier;
+                                    loadedImageDrawable.setBounds(0, 0, (int)width, (int)height);
+                                    drawable.setBounds(0, 0, (int) width, (int) height);
                                     drawable.setDrawable(loadedImageDrawable);
                                     setEllipsize(null);
-                                    setHeight(getHeight() + loadedImageDrawable.getIntrinsicHeight());
+                                    setHeight(getHeight() +(int)height);
+                                    Log.d("RichTextView", "get image " + imageUri);
                                 } else {
                                     Log.d("URLImageParser", "load image error ---- " + imageUri);
                                 }
@@ -87,11 +91,6 @@ public class RichTextView extends TextView{
             }
         }
         setText(ss);
-    }
-
-    private int dip2px(Context context, float dpValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
     }
 
     public void setPlainText(String text) {
