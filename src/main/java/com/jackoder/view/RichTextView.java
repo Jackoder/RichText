@@ -2,6 +2,7 @@ package com.jackoder.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.Spannable;
@@ -72,11 +73,11 @@ public class RichTextView extends TextView{
                                     }
                                     width = width * multiplier;
                                     height = height * multiplier;
-                                    loadedImageDrawable.setBounds(0, 0, (int)width, (int)height);
+                                    loadedImageDrawable.setBounds(0, 0, (int) width, (int) height);
                                     drawable.setBounds(0, 0, (int) width, (int) height);
                                     drawable.setDrawable(loadedImageDrawable);
                                     setEllipsize(null);
-                                    setHeight(getHeight() +(int)height);
+                                    setHeight(getHeight() + (int) height);
                                     Log.d("RichTextView", "get image " + imageUri);
                                 } else {
                                     Log.d("URLImageParser", "load image error ---- " + imageUri);
@@ -84,13 +85,24 @@ public class RichTextView extends TextView{
                             }
                         });
                     }
-                    ImageSpan span = new ImageSpan(drawable, ImageSpan.ALIGN_BASELINE);
+                    //必须用bottom,否则第一行图片会显示不全
+                    ImageSpan span = new ImageSpan(drawable, ImageSpan.ALIGN_BOTTOM);
                     ss.setSpan(span, index, index + temp.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                 }
                 index += temp.length();
             }
         }
         setText(ss);
+    }
+
+    @Override
+    public boolean onPreDraw() {
+        return super.onPreDraw();
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
     }
 
     public void setPlainText(String text) {

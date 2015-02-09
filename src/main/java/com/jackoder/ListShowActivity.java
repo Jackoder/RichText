@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import com.jackoder.view.RichTextView;
-import com.jackoder.view.RichTextView2;
 
 /**
  * Created by Jackoder on 2015/1/25.

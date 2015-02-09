@@ -11,9 +11,9 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import com.nd.hy.android.mooc.view.widget.richtext.base.ImageNonViewAware;
-import com.nd.hy.android.mooc.view.widget.richtext.base.URLDrawable;
-import com.nd.hy.android.mooc.view.widget.richtext.util.HtmlParser;
+import com.jackoder.util.HtmlParser;
+import com.jackoder.view.base.ImageNonViewAware;
+import com.jackoder.view.base.URLDrawable;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
@@ -82,7 +82,8 @@ public class RichEditText extends EditText {
                             }
                         });
                     }
-                    ImageSpan span = new ImageSpan(drawable, ImageSpan.ALIGN_BASELINE);
+                    //必须用bottom,否则第一行图片会显示不全
+                    ImageSpan span = new ImageSpan(drawable, ImageSpan.ALIGN_BOTTOM);
                     ss.setSpan(span, index, index + temp.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                 }
                 index += temp.length();
